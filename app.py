@@ -145,7 +145,11 @@ class XMLRiskAnalyzer:
         results = []
         if not os.path.exists(directory_path):
             return [{'error': f"Diretório não encontrado: {directory_path}"}]
-        xml_files = [f for f in os.listdir(directory_path) if f.endswith('.xml')]
+        xml_files = []
+for root, dirs, files in os.walk(directory_path):
+    for f in files:
+        if f.endswith('.xml'):
+            xml_files.append(os.path.join(root, f))
         if len(xml_files) < MIN_XML_FILES:
             return [{'error': f"Mínimo de {MIN_XML_FILES} arquivos XML necessários. Encontrados: {len(xml_files)}"}]
         for file_name in xml_files:
